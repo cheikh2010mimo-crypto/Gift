@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>هدية لدعاء 💗</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800&family=Tajawal:wght@400;500;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink-bg-1:#ffe3ef;
+    --pink-bg-2:#ffc9dd;
+    --pink-bg-3:#ffb8d4;
+    --pink-deep:#ff6fa0;
+    --pink-deeper:#e8437e;
+    --rose-dark:#7a1740;
+    --cream:#fff6fa;
+    --ink:#3a1230;
+    --shadow-soft: 0 10px 30px rgba(122,23,64,0.18);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html,body{
+    min-height:100%;
+    width:100%;
+    font-family:'Tajawal', sans-serif;
+    color:var(--ink);
+    background: radial-gradient(circle at 20% 15%, var(--pink-bg-1), var(--pink-bg-2) 60%, var(--pink-bg-3) 100%);
+    overflow-x:hidden;
+    transition: background 0.5s ease;
+  }
+
+  h1,h2,h3, .display{
+    font-family:'Cairo', sans-serif;
+  }
+
+  /* floating petals background */
+  .petals{
+    position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden;
+  }
+  .petal{
+    position:absolute; top:-40px;
+    font-size: 20px;
+    opacity:0.55;
+    animation: fall linear infinite;
+    filter: drop-shadow(0 2px 3px rgba(122,23,64,0.15));
+  }
+  @keyframes fall{
+    to{ transform: translateY(110vh) rotate(300deg); }
+  }
+
+  .screen{
+    position:relative;
+    z-index:1;
+    min-height:100vh;
+    min-height:100svh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: clamp(14px, 5vw, 24px);
+    padding-top: calc(clamp(14px, 5vw, 24px) + env(safe-area-inset-top));
+    padding-bottom: calc(clamp(14px, 5vw, 24px) + env(safe-area-inset-bottom));
+    width:100%;
+  }
+
+  .hidden{ display:none !important; }
+
+  /* ---------- Welcome / Question screen ---------- */
+  .card{
+    position:relative;
+    width:100%;
+    max-width:480px;
+    background: var(--cream);
+    border-radius: clamp(18px, 5vw, 28px);
+    padding: clamp(20px, 6vw, 32px) clamp(16px, 5vw, 26px) clamp(20px, 6vw, 30px);
+    box-shadow: var(--shadow-soft);
+    text-align:center;
+    border: 3px solid var(--pink-deep);
+    transition: box-shadow 0.5s ease, background-color 0.5s ease, border-color 0.5s ease;
+  }
+
+  .char-wrap{
+    width: clamp(110px, 34vw, 170px);
+    margin: clamp(-58px, -20vw, -78px) auto 6px;
+    filter: drop-shadow(0 8px 12px rgba(122,23,64,0.25));
+  }
+
+  .speech{
+    background: #ffffff;
+    border: 2px solid var(--pink-deep);
+    border-radius: 20px;
+    padding: clamp(11px, 3.5vw, 14px) clamp(14px, 4vw, 18px);
+    margin: 6px 0 clamp(16px, 5vw, 22px);
+    font-weight:700;
+    font-size: clamp(0.92rem, 3.6vw, 1.05rem);
+    color: var(--rose-dark);
+    position:relative;
+    min-height: 1.4em;
+    transition: transform .15s ease, border-color .5s ease, color .5s ease;
+    word-break: break-word;
+  }
+  .speech::after{
+    content:"";
+    position:absolute; bottom:-11px; right:38px;
+    width:18px; height:18px;
+    background:#fff;
+    border-left:2px solid var(--pink-deep);
+    border-bottom:2px solid var(--pink-deep);
+    transform: rotate(-45deg);
+  }
+
+  .name-tag{
+    font-weight:800;
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
+    color: var(--pink-deeper);
+    margin-bottom: 4px;
+  }
+
+  .question{
+    font-weight:800;
+    font-size: clamp(1.05rem, 4.5vw, 1.3rem);
+    margin-bottom: 20px;
+    color: var(--rose-dark);
+  }
+
+  .btn-row{
+    display:flex;
+    flex-wrap: wrap;
+    align-items:center;
+    justify-content:center;
+    gap: clamp(10px, 4vw, 18px);
+    min-height: 80px;
+    position:relative;
+  }
+
+  .choice-btn{
+    border:none;
+    border-radius: 999px;
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    cursor:pointer;
+    transition: all .25s cubic-bezier(.34,1.56,.64,1);
+    box-shadow: 0 6px 14px rgba(122,23,64,0.25);
+    white-space: nowrap;
+  }
+
+  .btn-yes{
+    background: linear-gradient(135deg, var(--pink-deep), var(--pink-deeper));
+    color:#fff;
+    padding: clamp(13px, 4vw, 16px) clamp(22px, 7vw, 30px);
+    font-size: clamp(0.95rem, 3.8vw, 1.1rem);
+  }
+  .btn-yes:hover{ filter:brightness(1.05); }
+
+  .btn-no{
+    background:#fff;
+    color: var(--pink-deeper);
+    border: 2px solid var(--pink-deep);
+    padding: clamp(13px, 4vw, 16px) clamp(22px, 7vw, 30px);
+    font-size: clamp(0.95rem, 3.8vw, 1.1rem);
+  }
+
+  .hint{
+    margin-top: 16px;
+    font-size: 0.85rem;
+    color: #a3577f;
+  }
+
+  /* ---------- Menu screen ---------- */
+  .menu-screen{
+    max-width: 640px;
+    width:100%;
+  }
+
+  .menu-title{
+    text-align:center;
+    font-size: clamp(1.4rem, 6vw, 1.9rem);
+    font-weight:800;
+    color: var(--rose-dark);
+    margin-bottom: 6px;
+  }
+  .menu-sub{
+    text-align:center;
+    color:#a3577f;
+    margin-bottom: clamp(20px, 6vw, 30px);
+    font-size: clamp(0.85rem, 3.4vw, .95rem);
+  }
+
+  .menu-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(12px, 3.5vw, 16px);
+  }
+  @media (max-width:520px){
+    .menu-grid{ grid-template-columns: 1fr; }
+  }
+
+  .menu-item{
+    background: var(--cream);
+    border: 2px solid var(--pink-deep);
+    border-radius: clamp(16px, 4vw, 20px);
+    padding: clamp(18px, 5vw, 22px) clamp(12px, 4vw, 16px);
+    text-align:center;
+    cursor:pointer;
+    box-shadow: var(--shadow-soft);
+    transition: transform .2s ease, box-shadow .2s ease, color .5s ease, background-color .5s ease, border-color .5s ease;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size: clamp(0.9rem, 3.6vw, 1rem);
+    color: var(--rose-dark);
+  }
+  .menu-item:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 14px 26px rgba(122,23,64,0.22);
+  }
+  .menu-item .icon{
+    font-size: clamp(1.5rem, 6vw, 1.8rem);
+    display:block;
+    margin-bottom: 8px;
+  }
+
+  /* ---------- Detail overlay ---------- */
+  .overlay{
+    position:fixed; inset:0; z-index:5;
+    background: rgba(0,0,0,0.42);
+    backdrop-filter: blur(2px);
+    display:flex; align-items:center; justify-content:center;
+    padding: clamp(12px, 4vw, 20px);
+  }
+  .detail-card{
+    background: var(--cream);
+    border-radius: clamp(18px, 5vw, 26px);
+    max-width: 520px; width:100%;
+    max-height: 85svh;
+    overflow-y:auto;
+    padding: clamp(20px, 6vw, 28px) clamp(16px, 5vw, 24px);
+    box-shadow: var(--shadow-soft);
+    position:relative;
+    transition: background-color 0.5s ease;
+  }
+  .close-btn{
+    position:absolute; top:14px; left:14px;
+    background: var(--pink-deep);
+    color:#fff;
+    border:none;
+    width:34px; height:34px;
+    min-width:34px;
+    border-radius:50%;
+    font-size:1.1rem;
+    cursor:pointer;
+    transition: background .5s ease;
+  }
+  .detail-title{
+    font-size: clamp(1.1rem, 4.5vw, 1.3rem);
+    color: var(--pink-deeper);
+    margin-bottom: 14px;
+    padding-inline-end: 40px;
+  }
+  .detail-body{
+    line-height:1.8;
+    color: var(--ink);
+    font-size: clamp(0.9rem, 3.6vw, 0.98rem);
+  }
+  .love-message{
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size: clamp(1.15rem, 5vw, 1.5rem);
+    line-height:2;
+    color: var(--pink-deeper);
+    text-align:center;
+  }
+  .video-wrap{
+    position:relative;
+    width:100%;
+    padding-top:56.25%;
+    border-radius:16px;
+    overflow:hidden;
+    margin-top:14px;
+    cursor:pointer;
+    display:block;
+    background-size:cover;
+    background-position:center;
+  }
+  .video-wrap .play-badge{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: rgba(0,0,0,0.25);
+    transition: background .2s ease;
+  }
+  .video-wrap:hover .play-badge{
+    background: rgba(0,0,0,0.4);
+  }
+  .video-wrap .play-circle{
+    width: 62px; height:62px;
+    border-radius:50%;
+    background: rgba(255,255,255,0.92);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+  }
+  .video-wrap .play-circle::after{
+    content:"";
+    border-style: solid;
+    border-width: 12px 0 12px 20px;
+    border-color: transparent transparent transparent var(--pink-deeper);
+    margin-inline-start: 4px;
+  }
+  .video-caption{
+    display:block;
+    text-align:center;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--rose-dark);
+    font-weight:600;
+  }
+  .placeholder-note{
+    margin-top:14px;
+    font-size:.82rem;
+    color:#a3577f;
+    background:#fff0f5;
+    border:1px dashed #ffb3cd;
+    border-radius:12px;
+    padding:10px 12px;
+  }
+
+  .color-choice-row{
+    display:flex;
+    justify-content:center;
+    gap: clamp(14px, 5vw, 22px);
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .color-btn{
+    border:none;
+    border-radius: 999px;
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size: clamp(0.95rem, 3.8vw, 1.05rem);
+    padding: clamp(12px, 4vw, 15px) clamp(26px, 8vw, 34px);
+    cursor:pointer;
+    color:#fff;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.22);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .color-btn:hover{ transform: translateY(-3px); }
+  .color-btn-blue{ background: linear-gradient(135deg, #4a90e2, #1c5fa8); }
+  .color-btn-black{ background: linear-gradient(135deg, #4a4a4a, #111111); }
+</style>
+</head>
+<body>
+
+<div class="petals" id="petals"></div>
+
+<!-- ============ SCREEN 1: WELCOME + QUESTION ============ -->
+<section class="screen" id="screen-question">
+  <div class="card">
+    <div class="char-wrap">
+      <!-- original anime-style swordsman character (original design, not a copy of any existing IP) -->
+      <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="haoriPattern" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="18" height="18" fill="#1c2b4a"/>
+            <rect width="9" height="9" fill="#d9a441"/>
+            <rect x="9" y="9" width="9" height="9" fill="#d9a441"/>
+          </pattern>
+        </defs>
+
+        <ellipse cx="100" cy="222" rx="60" ry="10" fill="#00000022"/>
+
+        <!-- haori (jacket) shoulders with original diamond pattern -->
+        <path d="M35 210 Q30 150 60 128 L100 148 L140 128 Q170 150 165 210 Z" fill="url(#haoriPattern)" stroke="#1c2b4a" stroke-width="3"/>
+        <path d="M78 150 L100 165 L122 150 L122 210 L78 210 Z" fill="#f4ece0"/>
+
+        <!-- sword hilt peeking from behind shoulder -->
+        <rect x="152" y="118" width="10" height="46" rx="4" fill="#3a3a3a" transform="rotate(18 157 141)"/>
+        <rect x="150" y="112" width="14" height="10" rx="2" fill="#d9a441" transform="rotate(18 157 117)"/>
+
+        <!-- hair back -->
+        <path d="M42 100 Q30 40 100 34 Q172 40 160 100 Q166 132 150 142 Q156 100 132 86 Q112 132 92 96 Q72 132 58 108 Q46 126 52 142 Q36 132 42 100Z" fill="#232733"/>
+
+        <!-- face -->
+        <ellipse cx="100" cy="118" rx="45" ry="49" fill="#ffe9d6"/>
+
+        <!-- hair front spikes with teal accent tips -->
+        <path d="M56 92 Q62 60 86 57 Q80 76 90 72 Q95 52 120 60 Q112 76 122 74 Q142 66 148 94 Q120 78 100 86 Q80 76 56 92Z" fill="#232733"/>
+        <path d="M42 100 Q48 66 72 60 Q60 82 68 92 Q52 90 42 100Z" fill="#232733"/>
+        <path d="M158 100 Q152 66 128 60 Q140 82 132 92 Q148 90 158 100Z" fill="#232733"/>
+        <path d="M42 100 Q48 66 72 60 Q64 78 70 88Z" fill="#2f9e8f"/>
+        <path d="M158 100 Q152 66 128 60 Q136 78 130 88Z" fill="#2f9e8f"/>
+
+        <!-- earring (simple stud, original) -->
+        <circle cx="150" cy="128" r="4" fill="#d9a441"/>
+
+        <!-- eyes (warm amber, rounder shape - distinct expression) -->
+        <ellipse cx="80" cy="120" rx="8.5" ry="11" fill="#7a4a1e"/>
+        <ellipse cx="120" cy="120" rx="8.5" ry="11" fill="#7a4a1e"/>
+        <circle cx="83" cy="115" r="2.4" fill="#fff"/>
+        <circle cx="123" cy="115" r="2.4" fill="#fff"/>
+
+        <!-- blush -->
+        <ellipse cx="68" cy="136" rx="8" ry="4.5" fill="#ff9fc0" opacity="0.55"/>
+        <ellipse cx="132" cy="136" rx="8" ry="4.5" fill="#ff9fc0" opacity="0.55"/>
+
+        <!-- mouth -->
+        <path d="M92 146 Q100 152 108 146" stroke="#7a4a1e" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+        <!-- simple headband, plain fabric -->
+        <rect x="54" y="86" width="92" height="10" rx="5" fill="#232733"/>
+      </svg>
+    </div>
+
+    <div class="name-tag" id="name-tag">دعاء 💕</div>
+    <div class="speech" id="speech-bubble">مرحبًا يا دعاء! كنت أنتظر هذه اللحظة 🥹</div>
+
+    <div class="question" id="question-text">هل تحبينني؟</div>
+
+    <div class="btn-row">
+      <button class="choice-btn btn-no" id="btn-no">لا</button>
+      <button class="choice-btn btn-yes" id="btn-yes">نعم</button>
+    </div>
+
+    <div class="hint">اضغطي على أحد الخيارين 🌸</div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 2: MIDDLE MENU ============ -->
+<section class="screen hidden" id="screen-menu">
+  <div class="menu-screen">
+    <div class="menu-title">ما اعرفه عنك 🤭</div>
+    <div class="menu-sub">كل زر يفتح لك ركن صغير خاص فيك</div>
+
+    <div class="menu-grid" id="menu-grid">
+      <!-- placeholder items — يمكن تعديل العدد والعناوين والمحتوى لاحقًا بسهولة -->
+      <div class="menu-item" data-detail="detail-1">
+        <span class="icon">🎨</span>
+        لونك المفضل
+      </div>
+      <div class="menu-item" data-detail="detail-2">
+        <span class="icon">🎬</span>
+        فيديو خاص لك
+      </div>
+      <div class="menu-item" data-detail="detail-3">
+        <span class="icon">💌</span>
+        رسالة لك
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DETAIL OVERLAYS (placeholders, one per menu item) ============ -->
+<div class="overlay hidden" id="detail-1">
+  <div class="detail-card">
+    <button class="close-btn" onclick="closeDetail('detail-1')">×</button>
+    <div class="detail-title">لونك المفضل 🎨</div>
+    <div class="detail-body">
+      اختاري اللون وشوفي شكل الصفحة يتغيّر بالكامل 👇
+    </div>
+    <div class="color-choice-row">
+      <button class="color-btn color-btn-blue" onclick="setTheme('blue')">أزرق</button>
+      <button class="color-btn color-btn-black" onclick="setTheme('black')">أسود</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="detail-2">
+  <div class="detail-card">
+    <button class="close-btn" onclick="closeDetail('detail-2')">×</button>
+    <div class="detail-title">فيديو خاص لك 🎬</div>
+    <a href="https://youtu.be/OymocBpIGVE" target="_blank" rel="noopener"
+       class="video-wrap" style="background-image:url('https://img.youtube.com/vi/OymocBpIGVE/hqdefault.jpg');">
+      <span class="play-badge"><span class="play-circle"></span></span>
+    </a>
+    <span class="video-caption">اضغطي لمشاهدة الفيديو على يوتيوب ▶️</span>
+  </div>
+</div>
+
+<div class="overlay hidden" id="detail-3">
+  <div class="detail-card">
+    <button class="close-btn" onclick="closeDetail('detail-3')">×</button>
+    <div class="detail-title">رسالة لك 💌</div>
+    <div class="detail-body love-message">
+      أبذل كل ما بوسعي لراحتك ورضاك 🥰<br><br>
+      صحيح أنني لست الفارس الذي تتمنينه أن يكون في أحلامك، لكنني أجاهد نفسي أن أكون لك أفضل من قبل 😘
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- floating petals ----------
+  const petalsWrap = document.getElementById('petals');
+  const petalEmojis = ['🌸','💮','💗'];
+  for(let i=0;i<18;i++){
+    const p = document.createElement('div');
+    p.className='petal';
+    p.textContent = petalEmojis[Math.floor(Math.random()*petalEmojis.length)];
+    p.style.left = Math.random()*100+'vw';
+    p.style.animationDuration = (8+Math.random()*10)+'s';
+    p.style.animationDelay = (Math.random()*10)+'s';
+    p.style.fontSize = (14+Math.random()*14)+'px';
+    petalsWrap.appendChild(p);
+  }
+
+  // ---------- yes/no interaction ----------
+  const btnYes = document.getElementById('btn-yes');
+  const btnNo = document.getElementById('btn-no');
+  const speech = document.getElementById('speech-bubble');
+  const screenQuestion = document.getElementById('screen-question');
+  const screenMenu = document.getElementById('screen-menu');
+
+  const noPhrases = [
+    "متأكدة؟ 🥺 جربي مرة ثانية",
+    "لا تكسرين خاطري هيك 😭",
+    "بجد؟ فكري شوي كمان 🤭",
+    "طيب بس بصراحة... تأكدي 🙈",
+    "آخر فرصة أراهن إنك بتحبيني 💗"
+  ];
+
+  let noCount = 0;
+  let yesScale = 1;
+  let noScale = 1;
+
+  // smaller screens get a gentler max-scale so the growing button never overflows
+  const maxYesScale = window.innerWidth < 380 ? 1.7 : 2.2;
+
+  btnNo.addEventListener('click', () => {
+    noCount++;
+    yesScale = Math.min(1 + noCount*0.15, maxYesScale);
+    noScale = Math.max(1 - noCount*0.15, 0.4);
+
+    btnYes.style.transform = `scale(${yesScale})`;
+    btnNo.style.transform = `scale(${noScale})`;
+
+    const phrase = noPhrases[Math.min(noCount-1, noPhrases.length-1)];
+    speech.textContent = phrase;
+    speech.style.transform = 'scale(1.05)';
+    setTimeout(()=> speech.style.transform='scale(1)', 150);
+
+    if(noScale <= 0.36){
+      btnNo.style.pointerEvents = 'none';
+      btnNo.style.opacity = '0.4';
+    }
+  });
+
+  btnYes.addEventListener('click', () => {
+    screenQuestion.classList.add('hidden');
+    screenMenu.classList.remove('hidden');
+  });
+
+  // ---------- menu -> detail overlays ----------
+  document.querySelectorAll('.menu-item').forEach(item=>{
+    item.addEventListener('click', ()=>{
+      const targetId = item.getAttribute('data-detail');
+      document.getElementById(targetId).classList.remove('hidden');
+    });
+  });
+
+  function closeDetail(id){
+    document.getElementById(id).classList.add('hidden');
+  }
+
+  // ---------- theme color switcher (from "لونك المفضل") ----------
+  const themes = {
+    blue: {
+      '--pink-bg-1': '#5b9dff',
+      '--pink-bg-2': '#2f6fed',
+      '--pink-bg-3': '#0b2f7a',
+      '--pink-deep': '#2f6fed',
+      '--pink-deeper': '#0b2f7a',
+      '--rose-dark': '#0b2f7a',
+      '--cream': '#eef5ff'
+    },
+    black: {
+      '--pink-bg-1': '#5a5a5a',
+      '--pink-bg-2': '#2a2a2a',
+      '--pink-bg-3': '#000000',
+      '--pink-deep': '#2a2a2a',
+      '--pink-deeper': '#000000',
+      '--rose-dark': '#000000',
+      '--cream': '#f2f2f2'
+    }
+  };
+
+  function setTheme(name){
+    const root = document.documentElement;
+    const theme = themes[name];
+    Object.keys(theme).forEach(varName=>{
+      root.style.setProperty(varName, theme[varName]);
+    });
+    closeDetail('detail-1');
+  }
+</script>
+
+</body>
+</html>
